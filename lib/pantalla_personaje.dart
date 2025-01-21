@@ -6,12 +6,11 @@ import 'package:http/http.dart' as http;
 class CharacterScreen extends StatefulWidget {
   const CharacterScreen({super.key});
 
-
   @override
   State<CharacterScreen> createState() => _CharacterScreenState();
 }
 class _CharacterScreenState extends State<CharacterScreen>{
-  String CharacterText = "";
+  String characterText = "";
 
   @override
   void initState(){
@@ -27,27 +26,27 @@ class _CharacterScreenState extends State<CharacterScreen>{
     if(response.statusCode == 200) {
       final json = response.body;
       Character character = Character.fromJson(jsonDecode(json));
-      CharacterText = "${character.name}\n${character.gender}\n${character.culture}\n${character.born}";
+      characterText = "${character.name}\n${character.gender}\n${character.culture}\n${character.born}";
     }else{
-      CharacterText = "Error al cargar el personaje";
+      characterText = "Error al cargar el personaje";
     }
     setState(() {});
-  }
-  
-  void character() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CharacterScreen()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children:[
-              Text (CharacterText,
-              style: const TextStyle(fontSize: 30, color: Colors.red)),
-          
-          TextButton(onPressed: character, child: const Text("Personaje")),
-        ]
+      body: Center(
+        child: Column(
+          children:[
+            const Text("Personaje aleatorio",
+              style: TextStyle(fontSize: 30, color: Colors.black)),
+            Text (characterText,
+            style: const TextStyle(fontSize: 30, color: Color.fromARGB(255, 0, 0, 0))),
+            const Padding(padding: EdgeInsets.all(30)),
+        
+          ]
+        ),
       ),
     );
   }
