@@ -4,18 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:tarea_flutter/personaje.dart';
 import 'package:http/http.dart' as http;
 
-
-class CharacterScreen extends StatefulWidget {
-  const CharacterScreen({super.key});
+class MenuScreen2 extends StatefulWidget{
+  const MenuScreen2({super.key});
 
   @override
-  State<CharacterScreen> createState() => _CharacterScreenState();
+  State<MenuScreen2> createState() => _MenuScreen2State();
 }
-class MenuScreen extends StatelessWidget{
-  const MenuScreen({super.key});
+
+class _MenuScreen2State extends State<MenuScreen2> {
+
+  var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    Widget page;
+    switch (selectedIndex) {
+      case 0:
+        page = CharacterScreen2();
+        break;
+      case 1:
+        page = Placeholder();
+        break;
+      default:
+        throw UnimplementedError('no widget for $selectedIndex');
+    }
     return Scaffold(
       body: Row(
         children: [
@@ -32,16 +44,18 @@ class MenuScreen extends StatelessWidget{
                   label: Text('Favorites'),
                 ),
               ],
-              selectedIndex: 0,
+              selectedIndex: selectedIndex,
               onDestinationSelected: (value) {
-                print('selected: $value');
+                setState(() {
+                  selectedIndex = value;
+                });
               },
             ),
           ),
           Expanded(
             child: Container(
               color: Theme.of(context).colorScheme.primaryContainer,
-              child: const CharacterScreen(),
+              child: page,
             ),
           ),
         ],
@@ -49,14 +63,11 @@ class MenuScreen extends StatelessWidget{
     );
   }
 }
-class _CharacterScreenState extends State<CharacterScreen>{
+
+class CharacterScreen2 extends StatelessWidget{
   String characterText = "";
   String randomURL = "";
-  @override
-  void initState(){
-    
-    super.initState();
-  }
+  
   //random number for the API
   int randomNumber(){
     int x = Random().nextInt(2135);
@@ -76,7 +87,6 @@ class _CharacterScreenState extends State<CharacterScreen>{
     }else{
       characterText = "Error al cargar el personaje";
     }
-    setState(() {});
   }
   //Favourites
   var favorites = <Character>[];
@@ -98,7 +108,6 @@ class _CharacterScreenState extends State<CharacterScreen>{
     } else{
       iconHeart = Icons.favorite_border;
     } 
-    setState(() {});
   }
   
   @override
