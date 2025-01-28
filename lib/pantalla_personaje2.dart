@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:tarea_flutter/pantalla_favoritos.dart';
 import 'package:tarea_flutter/personaje.dart';
 import 'package:http/http.dart' as http;
 
 class MenuScreen2 extends StatefulWidget{
   const MenuScreen2({super.key});
-
+  
   @override
   State<MenuScreen2> createState() => _MenuScreen2State();
 }
@@ -23,7 +24,7 @@ class _MenuScreen2State extends State<MenuScreen2> {
         page = CharacterScreen2();
         break;
       case 1:
-        page = Placeholder();
+        page = FavoritePage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -63,11 +64,10 @@ class _MenuScreen2State extends State<MenuScreen2> {
     );
   }
 }
-
+var favorites = <Character>[];
 class CharacterScreen2 extends StatelessWidget{
   String characterText = "";
   String randomURL = "";
-  
   //random number for the API
   int randomNumber(){
     int x = Random().nextInt(2135);
@@ -88,8 +88,8 @@ class CharacterScreen2 extends StatelessWidget{
       characterText = "Error al cargar el personaje";
     }
   }
-  //Favourites
-  var favorites = <Character>[];
+  //Favorites
+  
   void favoriteCharacter(Character? character){
     if(character != null){
       if (favorites.contains(character)){

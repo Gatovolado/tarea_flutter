@@ -22,3 +22,6 @@ class Aplication extends StatelessWidget {
     );
   }
 }
+class MyAppState extends ChangeNotifier{
+  
+}
