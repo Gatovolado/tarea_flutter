@@ -65,15 +65,24 @@ class _MenuScreen2State extends State<MenuScreen2> {
   }
 }
 var favorites = <Character>[];
-class CharacterScreen2 extends StatelessWidget{
+class CharacterScreen2 extends StatefulWidget{
+  @override
+  State<CharacterScreen2> createState() => _CharacterScreen2State();
+}
+
+class _CharacterScreen2State extends State<CharacterScreen2> {
   String characterText = "";
+
   String randomURL = "";
+
   //random number for the API
   int randomNumber(){
     int x = Random().nextInt(2135);
     return x;
   }
+
   Character? character;
+
   //Download a character for the API
   void downloadCharacter() async {
     //en total hay 2134 personajes
@@ -87,9 +96,10 @@ class CharacterScreen2 extends StatelessWidget{
     }else{
       characterText = "Error al cargar el personaje";
     }
+    setState(() {});
   }
+
   //Favorites
-  
   void favoriteCharacter(Character? character){
     if(character != null){
       if (favorites.contains(character)){
@@ -98,18 +108,22 @@ class CharacterScreen2 extends StatelessWidget{
         favorites.add(character!);
       }
     }
+    setState(() {});
     print(favorites);
   }
+
   //Icon
   IconData iconHeart = Icons.favorite_border;
+
   void icon(Character? character){
     if (favorites.contains(character)){
       iconHeart = Icons.favorite;
     } else{
       iconHeart = Icons.favorite_border;
     } 
+    setState(() {});
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,6 +157,7 @@ class CharacterScreen2 extends StatelessWidget{
                     print("button pressed!");
                     print(randomURL);
                     downloadCharacter();
+                    setState(() {});
                   }, 
                   child: const Text("Next"),
                 )
@@ -153,5 +168,4 @@ class CharacterScreen2 extends StatelessWidget{
       ),
     );
   }
-  
 }
