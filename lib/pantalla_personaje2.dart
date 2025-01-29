@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:tarea_flutter/pantalla_favoritos.dart';
 import 'package:tarea_flutter/personaje.dart';
+import 'package:tarea_flutter/ListaPersonajes.dart';
 import 'package:http/http.dart' as http;
 
 class MenuScreen2 extends StatefulWidget{
@@ -26,6 +27,9 @@ class _MenuScreen2State extends State<MenuScreen2> {
       case 1:
         page = FavoritePage();
         break;
+      case 2:
+        page = CharacterList();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -43,6 +47,10 @@ class _MenuScreen2State extends State<MenuScreen2> {
                 NavigationRailDestination(
                   icon: Icon(Icons.favorite),
                   label: Text('Favorites'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.list),
+                  label: Text('Todos los personajes'),
                 ),
               ],
               selectedIndex: selectedIndex,
@@ -71,9 +79,14 @@ class CharacterScreen2 extends StatefulWidget{
 }
 
 class _CharacterScreen2State extends State<CharacterScreen2> {
+  
   String characterText = "";
-
   String randomURL = "";
+  @override
+  void initState() {
+    downloadCharacter();
+    super.initState();
+  }
 
   //random number for the API
   int randomNumber(){
@@ -90,8 +103,14 @@ class _CharacterScreen2State extends State<CharacterScreen2> {
     final response = await http.get(url);
     if(response.statusCode == 200) {
       final json = response.body;
+      print(json);
       character = Character.fromJson(jsonDecode(json));
-      characterText = "Name: ${character?.name}\nGender: ${character?.gender}\nCulture: ${character?.culture}\nBorn: ${character?.born}";
+      String alias = "";
+      if (character!.aliases.isNotEmpty){
+        alias = character!.aliases[0];
+      }
+      characterText = "${character?.name}, ${alias}\nGender: ${character?.gender}\nCulture: ${character?.culture}\nBorn: ${character?.born}";
+      print(characterText);
       icon(character);
     }else{
       characterText = "Error al cargar el personaje";

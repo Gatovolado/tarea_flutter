@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tarea_flutter/pantalla_personaje.dart';
 import 'package:tarea_flutter/pantalla_personaje2.dart';
 
 void main() {
