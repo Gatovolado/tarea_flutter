@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tarea_flutter/main.dart';
 import 'package:tarea_flutter/pantalla_personaje2.dart';
-import 'package:tarea_flutter/personaje.dart';
 
 class FavoritePage extends StatelessWidget {
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tarea_flutter/VerPersonaje.dart';
 import 'package:tarea_flutter/personaje.dart';
-import 'package:tarea_flutter/pantalla_personaje2.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -10,7 +10,7 @@ class CharacterList extends StatefulWidget{
   State<CharacterList> createState() => _CharacterListState();
   
 }
-
+String listText = "";
 class _CharacterListState extends State<CharacterList> {
   String error = "";
   @override
@@ -53,6 +53,10 @@ class _CharacterListState extends State<CharacterList> {
   void numeroPersonaje(){
     numP = numP + 10;
   }
+  void showCharacter(int listIndex){
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => verPersonaje(title:"Información completa del personaje", infoCharacter: listaPersonajes[listIndex])));
+  }
+  
   @override
   Widget build(BuildContext context){
     
@@ -86,8 +90,10 @@ class _CharacterListState extends State<CharacterList> {
             if (listaPersonajes[index].name.isNotEmpty){
               nombre = "${listaPersonajes[index].name},";
             }else{nombre = "";}
-            String listText = "$nombre $alias";
-            return ListTile(title: Text(listText));
+            listText = "$nombre $alias";
+            return ListTile(title: TextButton(onPressed: () => showCharacter(index),
+            child: Text(listText)
+            ));
             
           },
           shrinkWrap: true,
