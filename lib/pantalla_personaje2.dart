@@ -124,7 +124,7 @@ class _CharacterScreen2State extends State<CharacterScreen2> {
       if (favorites.contains(character)){
       favorites.remove(character);
       }else{
-        favorites.add(character!);
+        favorites.add(character);
       }
     }
     setState(() {});
